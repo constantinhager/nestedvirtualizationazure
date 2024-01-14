@@ -37,7 +37,12 @@ jobs:
               SkuName           = $Env:STORAGE_ACCOUNT_SKU
             }
             $StorageAccount = New-AzStorageAccount @Param
-            New-AzStorageContainer -Name $Env:STORAGE_CONTAINER_NAME -Context $StorageAccount.Context
+
+            $Param = @{
+              Name    = $Env:STORAGE_CONTAINER_NAME
+              Context = $StorageAccount.Context
+            }
+            New-AzStorageContainer @Param
           azPSVersion: latest
         env:
           RESOURCE_GROUP_NAME: ${{secrets.RESOURCE_GROUP_NAME}}
