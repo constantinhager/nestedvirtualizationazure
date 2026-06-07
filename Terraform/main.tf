@@ -215,7 +215,7 @@ resource "azurerm_windows_virtual_machine" "nestedvm" {
   name                = local.vmName
   resource_group_name = local.resource_group_name
   location            = local.location
-  size                = "Standard_D4s_v4"
+  size                = "Standard_D4s_v3"
   admin_username      = "azureuser"
   admin_password      = var.vm_Password
   network_interface_ids = [
