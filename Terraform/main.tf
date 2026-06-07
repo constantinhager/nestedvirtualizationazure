@@ -20,6 +20,9 @@ locals {
   # Everything related to the load balancer
   pipname             = "nestedvm-pip"
   lbname              = "nestedvm-lb"
+
+  # Everything related to the network security group
+  nsgName             = "nestedvm-nsg"
 }
 #endregion
 
@@ -35,7 +38,7 @@ resource "azurerm_virtual_network" "udvnet" {
   }
 }
 
-resource "azurerm_subnet" "vmcontainersubnet" {
+resource "azurerm_subnet" "nestedvm_subnet" {
   name                 = local.subnetname
   resource_group_name  = local.resource_group_name
   virtual_network_name = azurerm_virtual_network.udvnet.name
@@ -114,4 +117,29 @@ resource "azurerm_lb_outbound_rule" "internet" {
   }
 }
 #endregion
+#endregion
+
+#region Network Security Group
+resource "azurerm_network_security_group" "nsg" {
+  name                = local.nsgName
+  location            = local.location
+  resource_group_name = local.resource_group_name
+  tags = {
+    environment = "NSG for Nested Virtualization Lab"
+  }
+}
+
+resource "azurerm_network_security_rule" "rdp" {
+  name                        = "Allow-RDP"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "3389"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "172.16.0.4"
+  resource_group_name         = local.resource_group_name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
 #endregion
