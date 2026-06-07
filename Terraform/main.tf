@@ -175,7 +175,7 @@ resource "azurerm_network_interface" "nestedvmnic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = data.azurerm_subnet.nestedvm_subnet.id
+    subnet_id                     = data.azurerm_subnet.subnet.id
     private_ip_address_allocation = "Static"
     private_ip_address            = "172.16.0.4"
   }
