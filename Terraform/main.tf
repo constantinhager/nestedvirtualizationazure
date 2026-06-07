@@ -1,3 +1,12 @@
+#region Terraform feature block
+provider "azurerm" {
+  features {
+
+  }
+  use_oidc = true
+}
+#endregion
+
 #region local variables
 locals {
   # Everything related to the virtual network
