@@ -37,7 +37,6 @@ jobs:
       - name: "Run az commands"
         run: |
           az account show
-          az storage account list --resource-group nestedvm-rg
 
       - name: Terraform Init
         id: init
@@ -75,7 +74,8 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_USE_AZUREAD: true
           ARM_USE_OIDC: true
-        run: terraform plan -no-color
+          VM_PASSWORD: ${{ secrets.VM_PASSWORD }}
+        run: terraform plan -no-color -var="vm_Password=$VM_PASSWORD"
         working-directory: ./Terraform
 
       # Add a comment to pull requests with plan results
