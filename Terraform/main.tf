@@ -246,6 +246,7 @@ resource "azurerm_windows_virtual_machine" "nestedvm" {
   vtpm_enabled = false
   secure_boot_enabled = false
   timezone = "W. Europe Standard Time"
+  patch_mode = "AutomaticByPlatform"
 
   tags = {
     "Function" = "Nested Virtual Machine for the Nested Virtualization Lab"
