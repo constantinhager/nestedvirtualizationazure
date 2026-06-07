@@ -53,5 +53,6 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ARM_USE_AZUREAD: true
           ARM_USE_OIDC: true
-        run: terraform apply -auto-approve
+          VM_PASSWORD: ${{ secrets.VM_PASSWORD }}
+        run: terraform apply -auto-approve -var="vm_Password=$VM_PASSWORD"
         working-directory: ./Terraform
