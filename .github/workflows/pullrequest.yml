@@ -37,6 +37,7 @@ jobs:
       - name: "Run az commands"
         run: |
           az account show
+          az storage account list --resource-group nestedvm-rg
 
       - name: Terraform Init
         id: init
